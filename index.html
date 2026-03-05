@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>UAE Corporate Tax Calculator</title>
+
+<style>
+body{
+font-family: Arial;
+background:#f4f4f4;
+display:flex;
+justify-content:center;
+align-items:center;
+height:100vh;
+}
+
+.calculator{
+background:white;
+padding:30px;
+border-radius:10px;
+box-shadow:0 0 10px rgba(0,0,0,0.1);
+width:350px;
+}
+
+input{
+width:100%;
+padding:10px;
+margin-top:10px;
+}
+
+button{
+margin-top:15px;
+padding:10px;
+width:100%;
+background:#0073aa;
+color:white;
+border:none;
+cursor:pointer;
+}
+
+.result{
+margin-top:15px;
+font-weight:bold;
+}
+</style>
+
+</head>
+
+<body>
+
+<div class="calculator">
+
+<h2>UAE Corporate Tax Calculator</h2>
+
+<label>Enter Profit (AED)</label>
+
+<input type="number" id="profit">
+
+<button onclick="calculateTax()">Calculate Tax</button>
+
+<div class="result" id="result"></div>
+
+</div>
+
+<script>
+
+function calculateTax(){
+
+let profit=document.getElementById("profit").value;
+
+let tax=0;
+
+if(profit>375000){
+tax=(profit-375000)*0.09;
+}
+
+document.getElementById("result").innerHTML="Tax Payable: AED "+tax.toFixed(2);
+
+}
+
+</script>
+
+</body>
+</html>
