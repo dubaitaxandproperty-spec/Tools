@@ -1,85 +1,358 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>UAE Corporate Tax Calculator</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>UAE Corporate Tax Calculator</title>
+  <style>
+    :root{
+      --bg:#f6f8fb;
+      --card:#ffffff;
+      --text:#0f172a;
+      --muted:#64748b;
+      --border:#e2e8f0;
+      --primary:#2563eb;
+      --primaryDark:#1d4ed8;
+      --good:#16a34a;
+      --warn:#f59e0b;
+      --shadow: 0 10px 25px rgba(2, 6, 23, 0.08);
+      --radius:14px;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Apple Color Emoji","Segoe UI Emoji";
+      background:var(--bg);
+      color:var(--text);
+      line-height:1.4;
+    }
+    .wrap{
+      max-width: 980px;
+      margin: 38px auto;
+      padding: 0 16px;
+    }
+    .header{
+      display:flex;
+      flex-direction:column;
+      gap:8px;
+      margin-bottom: 18px;
+    }
+    .badge{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      color:var(--muted);
+      font-size:13px;
+    }
+    .badge span{
+      width:10px;height:10px;border-radius:999px;background:var(--primary);
+      display:inline-block;
+    }
+    h1{
+      margin:0;
+      font-size:28px;
+      letter-spacing:-0.02em;
+    }
+    .sub{
+      margin:0;
+      color:var(--muted);
+      font-size:14px;
+    }
 
-<style>
-body{
-font-family: Arial;
-background:#f4f4f4;
-display:flex;
-justify-content:center;
-align-items:center;
-height:100vh;
-}
+    .grid{
+      display:grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap:16px;
+      align-items:start;
+    }
+    @media (max-width: 860px){
+      .grid{grid-template-columns: 1fr}
+    }
 
-.calculator{
-background:white;
-padding:30px;
-border-radius:10px;
-box-shadow:0 0 10px rgba(0,0,0,0.1);
-width:350px;
-}
+    .card{
+      background:var(--card);
+      border:1px solid var(--border);
+      border-radius:var(--radius);
+      box-shadow: var(--shadow);
+      padding: 18px;
+    }
+    .card h2{
+      margin:0 0 12px 0;
+      font-size:16px;
+    }
+    .row{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:12px;
+    }
+    @media (max-width: 520px){
+      .row{grid-template-columns:1fr}
+    }
 
-input{
-width:100%;
-padding:10px;
-margin-top:10px;
-}
+    label{
+      display:block;
+      font-size:13px;
+      color:var(--muted);
+      margin-bottom:8px;
+    }
+    .input{
+      display:flex;
+      align-items:center;
+      border:1px solid var(--border);
+      border-radius:12px;
+      overflow:hidden;
+      background:#fff;
+    }
+    .prefix{
+      padding:12px 12px;
+      font-size:13px;
+      color:var(--muted);
+      background:#f8fafc;
+      border-right:1px solid var(--border);
+      min-width:58px;
+      text-align:center;
+    }
+    input{
+      width:100%;
+      border:0;
+      outline:none;
+      padding:12px 12px;
+      font-size:14px;
+    }
+    .hint{
+      font-size:12px;
+      color:var(--muted);
+      margin-top:8px;
+    }
 
-button{
-margin-top:15px;
-padding:10px;
-width:100%;
-background:#0073aa;
-color:white;
-border:none;
-cursor:pointer;
-}
+    .btns{
+      display:flex;
+      gap:10px;
+      margin-top: 12px;
+      flex-wrap:wrap;
+    }
+    button{
+      border:0;
+      border-radius:12px;
+      padding:12px 14px;
+      font-weight:600;
+      cursor:pointer;
+      font-size:14px;
+    }
+    .primary{
+      background:var(--primary);
+      color:#fff;
+    }
+    .primary:hover{background:var(--primaryDark)}
+    .ghost{
+      background:#fff;
+      border:1px solid var(--border);
+      color:var(--text);
+    }
 
-.result{
-margin-top:15px;
-font-weight:bold;
-}
-</style>
+    .result{
+      margin-top: 14px;
+      border:1px solid var(--border);
+      border-radius:12px;
+      padding: 14px;
+      background:#fbfdff;
+    }
+    .kv{
+      display:flex;
+      justify-content:space-between;
+      gap:10px;
+      padding:10px 0;
+      border-bottom:1px dashed var(--border);
+      font-size:14px;
+    }
+    .kv:last-child{border-bottom:0}
+    .k{color:var(--muted)}
+    .v{font-variant-numeric: tabular-nums;}
+    .big{
+      margin-top: 10px;
+      padding: 12px;
+      border-radius:12px;
+      border:1px solid #dbeafe;
+      background:#eff6ff;
+    }
+    .big .tax{
+      font-size:20px;
+      font-weight:800;
+      margin-top:4px;
+      color:var(--primaryDark);
+    }
 
+    .sideNote{
+      color:var(--muted);
+      font-size:13px;
+    }
+    .pill{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:10px 12px;
+      border:1px solid var(--border);
+      border-radius:999px;
+      background:#fff;
+      margin-top:10px;
+      font-size:13px;
+      color:var(--muted);
+    }
+    .pill b{color:var(--text)}
+    .footerNote{
+      margin-top: 14px;
+      color:var(--muted);
+      font-size:12px;
+    }
+    .warnBox{
+      margin-top:10px;
+      border:1px solid #fde68a;
+      background:#fffbeb;
+      padding:10px 12px;
+      border-radius:12px;
+      color:#92400e;
+      font-size:12px;
+    }
+  </style>
 </head>
-
 <body>
+  <div class="wrap">
+    <div class="header">
+      <div class="badge"><span></span> Clean (ClearTax-style) tool</div>
+      <h1>UAE Corporate Tax Calculator</h1>
+      <p class="sub">Calculate corporate tax at <b>9%</b> on profits above <b>AED 375,000</b>.</p>
+    </div>
 
-<div class="calculator">
+    <div class="grid">
+      <!-- Left: Calculator -->
+      <div class="card">
+        <h2>Enter your numbers</h2>
 
-<h2>UAE Corporate Tax Calculator</h2>
+        <div class="row">
+          <div>
+            <label for="profit">Annual Profit (AED)</label>
+            <div class="input">
+              <div class="prefix">AED</div>
+              <input id="profit" type="number" inputmode="decimal" placeholder="e.g., 800000" min="0" />
+            </div>
+            <div class="hint">Tip: Enter profit after expenses (not turnover).</div>
+          </div>
 
-<label>Enter Profit (AED)</label>
+          <div>
+            <label for="threshold">Tax-free threshold (AED)</label>
+            <div class="input">
+              <div class="prefix">AED</div>
+              <input id="threshold" type="number" inputmode="decimal" value="375000" min="0" />
+            </div>
+            <div class="hint">Default threshold: 375,000.</div>
+          </div>
+        </div>
 
-<input type="number" id="profit">
+        <div class="row" style="margin-top:12px;">
+          <div>
+            <label for="rate">Tax rate</label>
+            <div class="input">
+              <div class="prefix">%</div>
+              <input id="rate" type="number" inputmode="decimal" value="9" min="0" step="0.01" />
+            </div>
+            <div class="hint">Standard corporate tax rate: 9%.</div>
+          </div>
 
-<button onclick="calculateTax()">Calculate Tax</button>
+          <div>
+            <div class="pill">Output shows: <b>Taxable income</b> + <b>Tax payable</b></div>
+          </div>
+        </div>
 
-<div class="result" id="result"></div>
+        <div class="btns">
+          <button class="primary" onclick="calculate()">Calculate</button>
+          <button class="ghost" onclick="resetForm()">Reset</button>
+        </div>
 
-</div>
+        <div id="result" class="result" style="display:none;">
+          <div class="kv"><div class="k">Profit</div><div class="v" id="rProfit">—</div></div>
+          <div class="kv"><div class="k">Tax-free portion</div><div class="v" id="rFree">—</div></div>
+          <div class="kv"><div class="k">Taxable income</div><div class="v" id="rTaxable">—</div></div>
 
-<script>
+          <div class="big">
+            <div class="k">Corporate Tax Payable</div>
+            <div class="tax" id="rTax">—</div>
+            <div class="hint">Calculated as: taxable income × rate</div>
+          </div>
 
-function calculateTax(){
+          <div class="warnBox" id="warn" style="display:none;">
+            Note: This is a simplified calculator. Certain businesses, reliefs, and specific rules may change the final liability.
+          </div>
+        </div>
 
-let profit=document.getElementById("profit").value;
+        <div class="footerNote">
+          Disclaimer: For education only. Always validate with current UAE laws/FTA guidance and your tax advisor.
+        </div>
+      </div>
 
-let tax=0;
+      <!-- Right: Explainer -->
+      <div class="card">
+        <h2>How this tool works</h2>
+        <p class="sideNote">
+          UAE Corporate Tax is generally applied at <b>9%</b> on profits above <b>AED 375,000</b>.
+          This tool shows a clean breakdown:
+        </p>
+        <ul class="sideNote">
+          <li><b>Profit:</b> what you enter</li>
+          <li><b>Tax-free portion:</b> up to the threshold</li>
+          <li><b>Taxable income:</b> profit − threshold (if positive)</li>
+          <li><b>Tax payable:</b> taxable income × tax rate</li>
+        </ul>
+        <p class="sideNote">
+          Next upgrades we can add: advanced options, free-zone logic, turnover toggle, and a “copy result” button.
+        </p>
+      </div>
+    </div>
+  </div>
 
-if(profit>375000){
-tax=(profit-375000)*0.09;
-}
+  <script>
+    function fmtAED(n){
+      const v = Number(n);
+      if (!isFinite(v)) return "—";
+      return "AED " + v.toLocaleString(undefined, {maximumFractionDigits: 2});
+    }
 
-document.getElementById("result").innerHTML="Tax Payable: AED "+tax.toFixed(2);
+    function calculate(){
+      const profit = Number(document.getElementById("profit").value);
+      const threshold = Number(document.getElementById("threshold").value);
+      const rate = Number(document.getElementById("rate").value) / 100;
 
-}
+      if (!isFinite(profit) || profit < 0){
+        alert("Please enter a valid profit (0 or more).");
+        return;
+      }
+      if (!isFinite(threshold) || threshold < 0){
+        alert("Please enter a valid threshold (0 or more).");
+        return;
+      }
+      if (!isFinite(rate) || rate < 0){
+        alert("Please enter a valid tax rate (0 or more).");
+        return;
+      }
 
-</script>
+      const freePortion = Math.min(profit, threshold);
+      const taxable = Math.max(0, profit - threshold);
+      const tax = taxable * rate;
 
+      document.getElementById("rProfit").textContent = fmtAED(profit);
+      document.getElementById("rFree").textContent = fmtAED(freePortion);
+      document.getElementById("rTaxable").textContent = fmtAED(taxable);
+      document.getElementById("rTax").textContent = fmtAED(tax);
+
+      document.getElementById("result").style.display = "block";
+      document.getElementById("warn").style.display = "block";
+    }
+
+    function resetForm(){
+      document.getElementById("profit").value = "";
+      document.getElementById("threshold").value = 375000;
+      document.getElementById("rate").value = 9;
+      document.getElementById("result").style.display = "none";
+    }
+  </script>
 </body>
 </html>
