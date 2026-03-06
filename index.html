@@ -3,356 +3,900 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>UAE Corporate Tax Calculator</title>
+  <meta name="description" content="Premium UAE Corporate Tax Calculator for Dubai Tax & Property. Estimate taxable income, AED 375,000 threshold usage, and 9% corporate tax exposure for businesses and natural persons." />
+  <meta name="keywords" content="UAE corporate tax calculator, Dubai corporate tax calculator, UAE corporate tax on profit, UAE 9% corporate tax threshold, UAE business tax calculator, UAE corporate tax for natural persons, corporate tax calculator Dubai free zone" />
+  <title>UAE Corporate Tax Calculator | Dubai Tax & Property</title>
   <style>
-    :root{
-      --bg:#f6f8fb;
-      --card:#ffffff;
-      --text:#0f172a;
-      --muted:#64748b;
-      --border:#e2e8f0;
-      --primary:#2563eb;
-      --primaryDark:#1d4ed8;
-      --good:#16a34a;
-      --warn:#f59e0b;
-      --shadow: 0 10px 25px rgba(2, 6, 23, 0.08);
-      --radius:14px;
-    }
-    *{box-sizing:border-box}
-    body{
-      margin:0;
-      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Apple Color Emoji","Segoe UI Emoji";
-      background:var(--bg);
-      color:var(--text);
-      line-height:1.4;
-    }
-    .wrap{
-      max-width: 980px;
-      margin: 38px auto;
-      padding: 0 16px;
-    }
-    .header{
-      display:flex;
-      flex-direction:column;
-      gap:8px;
-      margin-bottom: 18px;
-    }
-    .badge{
-      display:inline-flex;
-      align-items:center;
-      gap:8px;
-      color:var(--muted);
-      font-size:13px;
-    }
-    .badge span{
-      width:10px;height:10px;border-radius:999px;background:var(--primary);
-      display:inline-block;
-    }
-    h1{
-      margin:0;
-      font-size:28px;
-      letter-spacing:-0.02em;
-    }
-    .sub{
-      margin:0;
-      color:var(--muted);
-      font-size:14px;
+    :root {
+      --bg: #f7f7f5;
+      --surface: #ffffff;
+      --ink: #111111;
+      --muted: #595959;
+      --gold: #8c6a2e;
+      --gold-soft: #b5914a;
+      --gold-pale: #f6f0e5;
+      --line: #ded7cb;
+      --success: #0b6b3a;
+      --warning: #7d4e00;
+      --danger: #7a1212;
+      --radius: 16px;
+      --shadow: 0 18px 35px rgba(17, 17, 17, 0.08);
     }
 
-    .grid{
-      display:grid;
-      grid-template-columns: 1.15fr 0.85fr;
-      gap:16px;
-      align-items:start;
-    }
-    @media (max-width: 860px){
-      .grid{grid-template-columns: 1fr}
+    * { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; }
+    body {
+      font-family: "Inter", "Segoe UI", Roboto, Arial, sans-serif;
+      color: var(--ink);
+      background: linear-gradient(to bottom, #fff 0%, var(--bg) 38%, #fff 100%);
+      line-height: 1.6;
     }
 
-    .card{
-      background:var(--card);
-      border:1px solid var(--border);
-      border-radius:var(--radius);
+    .taxcalc {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 24px 16px 60px;
+    }
+
+    .hero {
+      border: 1px solid var(--line);
+      border-radius: calc(var(--radius) + 2px);
+      background: #fff;
+      padding: 30px;
       box-shadow: var(--shadow);
-      padding: 18px;
-    }
-    .card h2{
-      margin:0 0 12px 0;
-      font-size:16px;
-    }
-    .row{
-      display:grid;
-      grid-template-columns: 1fr 1fr;
-      gap:12px;
-    }
-    @media (max-width: 520px){
-      .row{grid-template-columns:1fr}
+      margin-bottom: 24px;
     }
 
-    label{
-      display:block;
-      font-size:13px;
-      color:var(--muted);
-      margin-bottom:8px;
-    }
-    .input{
-      display:flex;
-      align-items:center;
-      border:1px solid var(--border);
-      border-radius:12px;
-      overflow:hidden;
-      background:#fff;
-    }
-    .prefix{
-      padding:12px 12px;
-      font-size:13px;
-      color:var(--muted);
-      background:#f8fafc;
-      border-right:1px solid var(--border);
-      min-width:58px;
-      text-align:center;
-    }
-    input{
-      width:100%;
-      border:0;
-      outline:none;
-      padding:12px 12px;
-      font-size:14px;
-    }
-    .hint{
-      font-size:12px;
-      color:var(--muted);
-      margin-top:8px;
+    .hero__kicker {
+      display: inline-flex;
+      gap: 8px;
+      align-items: center;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--gold);
+      font-weight: 700;
+      margin-bottom: 10px;
     }
 
-    .btns{
-      display:flex;
-      gap:10px;
+    .hero__kicker::before {
+      content: "";
+      width: 8px;
+      height: 8px;
+      border-radius: 99px;
+      background: var(--gold);
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(1.75rem, 2.6vw, 2.5rem);
+      line-height: 1.2;
+    }
+
+    .hero__sub {
+      margin: 12px 0 4px;
+      color: #222;
+      font-size: 1.05rem;
+      max-width: 76ch;
+    }
+
+    .hero__trust {
+      margin: 8px 0 0;
+      color: var(--muted);
+      font-size: 0.95rem;
+      font-weight: 500;
+    }
+
+    .calc-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+      gap: 20px;
+      align-items: start;
+    }
+
+    .card {
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--surface);
+      box-shadow: var(--shadow);
+      padding: 22px;
+    }
+
+    .card h2 {
+      margin-top: 0;
+      margin-bottom: 6px;
+      font-size: 1.2rem;
+    }
+
+    .card__intro {
+      margin-top: 0;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .field { margin-bottom: 8px; }
+
+    .field label {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-weight: 600;
+      font-size: 0.9rem;
+      margin-bottom: 6px;
+    }
+
+    .help-tip {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      border: 1px solid var(--gold-soft);
+      color: var(--gold);
+      font-size: 0.75rem;
+      cursor: help;
+    }
+
+    .help-tip:hover::after,
+    .help-tip:focus::after {
+      content: attr(data-tip);
+      position: absolute;
+      top: calc(100% + 6px);
+      right: 0;
+      width: 230px;
+      z-index: 10;
+      background: #111;
+      color: #fff;
+      font-size: 0.75rem;
+      font-weight: 400;
+      line-height: 1.4;
+      padding: 8px;
+      border-radius: 8px;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+    }
+
+    .input-wrap {
+      display: flex;
+      align-items: center;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      overflow: hidden;
+      background: #fff;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    .input-wrap:focus-within {
+      border-color: var(--gold);
+      box-shadow: 0 0 0 3px rgba(140, 106, 46, 0.12);
+    }
+
+    .prefix {
+      padding: 11px 10px;
+      min-width: 56px;
+      border-right: 1px solid var(--line);
+      text-align: center;
+      background: #faf8f3;
+      color: #444;
+      font-size: 0.82rem;
+      font-weight: 600;
+    }
+
+    input[type="number"], select {
+      width: 100%;
+      border: 0;
+      outline: 0;
+      background: transparent;
+      padding: 11px;
+      font-size: 0.95rem;
+      color: var(--ink);
+    }
+
+    .field small {
+      color: var(--muted);
+      font-size: 0.78rem;
+    }
+
+    .field__error {
+      display: none;
+      margin-top: 4px;
+      color: var(--danger);
+      font-size: 0.8rem;
+    }
+
+    .toggle-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin: 16px 0 6px;
+      padding: 10px 12px;
+      background: #faf8f3;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+    }
+
+    .switch {
+      position: relative;
+      width: 48px;
+      height: 28px;
+      background: #d8d2c8;
+      border-radius: 999px;
+      cursor: pointer;
+      border: none;
+    }
+
+    .switch::after {
+      content: "";
+      position: absolute;
+      top: 3px;
+      left: 4px;
+      width: 21px;
+      height: 21px;
+      background: #fff;
+      border-radius: 50%;
+      transition: 0.2s ease;
+    }
+
+    .switch[aria-checked="true"] {
+      background: var(--gold);
+    }
+
+    .switch[aria-checked="true"]::after {
+      left: 23px;
+    }
+
+    .advanced-area { display: none; margin-top: 6px; }
+    .advanced-area.is-on { display: block; }
+
+    .button-row {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 16px;
+    }
+
+    .btn {
+      border-radius: 12px;
+      border: 1px solid transparent;
+      padding: 10px 14px;
+      font-weight: 700;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: transform 0.12s ease, background 0.2s ease;
+    }
+
+    .btn:hover { transform: translateY(-1px); }
+
+    .btn--gold {
+      background: var(--gold);
+      color: #fff;
+    }
+
+    .btn--gold:hover { background: #7a5a26; }
+    .btn--line { background: #fff; color: #111; border-color: var(--line); }
+    .btn--line:hover { border-color: #b9af9f; }
+
+    .notes {
+      margin-top: 14px;
+      display: grid;
+      gap: 8px;
+    }
+
+    .alert {
+      display: none;
+      border-radius: 12px;
+      border: 1px solid;
+      padding: 10px 12px;
+      font-size: 0.86rem;
+      line-height: 1.5;
+    }
+
+    .alert--info {
+      background: #f4efe4;
+      border-color: #d2be92;
+      color: #5c4518;
+    }
+
+    .alert--note {
+      background: #f5f5f5;
+      border-color: #d8d8d8;
+      color: #393939;
+    }
+
+    .results { position: sticky; top: 12px; }
+
+    .badge {
+      display: inline-block;
+      padding: 5px 10px;
+      border-radius: 999px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      margin-bottom: 10px;
+      border: 1px solid;
+      background: #fff;
+    }
+
+    .badge--neutral { border-color: #c8c8c8; color: #333; }
+    .badge--good { border-color: #b6dfc8; color: var(--success); background: #eff9f3; }
+    .badge--warn { border-color: #e6d2aa; color: var(--warning); background: #fffaef; }
+
+    .metric {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 9px 0;
+      border-bottom: 1px dashed var(--line);
+      font-size: 0.93rem;
+    }
+
+    .metric:last-child { border-bottom: none; }
+    .metric strong { font-variant-numeric: tabular-nums; }
+
+    .tax-highlight {
       margin-top: 12px;
-      flex-wrap:wrap;
-    }
-    button{
-      border:0;
-      border-radius:12px;
-      padding:12px 14px;
-      font-weight:600;
-      cursor:pointer;
-      font-size:14px;
-    }
-    .primary{
-      background:var(--primary);
-      color:#fff;
-    }
-    .primary:hover{background:var(--primaryDark)}
-    .ghost{
-      background:#fff;
-      border:1px solid var(--border);
-      color:var(--text);
-    }
-
-    .result{
-      margin-top: 14px;
-      border:1px solid var(--border);
-      border-radius:12px;
-      padding: 14px;
-      background:#fbfdff;
-    }
-    .kv{
-      display:flex;
-      justify-content:space-between;
-      gap:10px;
-      padding:10px 0;
-      border-bottom:1px dashed var(--border);
-      font-size:14px;
-    }
-    .kv:last-child{border-bottom:0}
-    .k{color:var(--muted)}
-    .v{font-variant-numeric: tabular-nums;}
-    .big{
-      margin-top: 10px;
+      border-radius: 12px;
+      border: 1px solid #d9c6a0;
       padding: 12px;
-      border-radius:12px;
-      border:1px solid #dbeafe;
-      background:#eff6ff;
-    }
-    .big .tax{
-      font-size:20px;
-      font-weight:800;
-      margin-top:4px;
-      color:var(--primaryDark);
+      background: linear-gradient(145deg, #fff, #faf5eb);
+      animation: pulse 0.35s ease;
     }
 
-    .sideNote{
-      color:var(--muted);
-      font-size:13px;
+    .tax-highlight__label { font-size: 0.8rem; color: #5a4a2b; }
+    .tax-highlight__value { font-size: 1.65rem; font-weight: 800; color: #6f5421; line-height: 1.1; }
+
+    .bar {
+      margin-top: 12px;
+      height: 16px;
+      background: #ece8e0;
+      border-radius: 999px;
+      overflow: hidden;
+      display: flex;
     }
-    .pill{
-      display:inline-flex;
-      align-items:center;
-      gap:8px;
-      padding:10px 12px;
-      border:1px solid var(--border);
-      border-radius:999px;
-      background:#fff;
-      margin-top:10px;
-      font-size:13px;
-      color:var(--muted);
+
+    .bar__zero { background: #cdb587; }
+    .bar__nine { background: #8c6a2e; }
+    .bar__post { background: #191919; }
+
+    .bar-legend {
+      list-style: none;
+      padding-left: 0;
+      margin: 10px 0 0;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 6px;
+      font-size: 0.84rem;
+      color: #333;
     }
-    .pill b{color:var(--text)}
-    .footerNote{
-      margin-top: 14px;
-      color:var(--muted);
-      font-size:12px;
+
+    .bar-legend li::before {
+      content: "";
+      display: inline-block;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      margin-right: 6px;
+      vertical-align: middle;
     }
-    .warnBox{
-      margin-top:10px;
-      border:1px solid #fde68a;
-      background:#fffbeb;
-      padding:10px 12px;
-      border-radius:12px;
-      color:#92400e;
-      font-size:12px;
+
+    .bar-legend .l0::before { background: #cdb587; }
+    .bar-legend .l1::before { background: #8c6a2e; }
+    .bar-legend .l2::before { background: #191919; }
+
+    .section {
+      margin-top: 24px;
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 22px;
+      box-shadow: var(--shadow);
+    }
+
+    .section h2 {
+      margin: 0 0 12px;
+      font-size: 1.35rem;
+    }
+
+    .section h3 {
+      margin: 18px 0 8px;
+      font-size: 1.08rem;
+    }
+
+    .section p { margin: 0 0 10px; color: #2f2f2f; }
+    .section ul, .section ol { margin: 8px 0 0 20px; }
+
+    .faq-item {
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      margin-bottom: 10px;
+      overflow: hidden;
+    }
+
+    .faq-q {
+      width: 100%;
+      text-align: left;
+      border: 0;
+      background: #fff;
+      padding: 12px 14px;
+      font-weight: 700;
+      cursor: pointer;
+      color: #181818;
+    }
+
+    .faq-q:hover { background: #faf8f3; }
+
+    .faq-a {
+      display: none;
+      padding: 0 14px 12px;
+      color: #333;
+      font-size: 0.95rem;
+    }
+
+    .faq-item.open .faq-a { display: block; }
+
+    .disclaimer {
+      border: 1px solid #d8c8a9;
+      border-left: 6px solid var(--gold);
+      background: #fdfaf4;
+      border-radius: 12px;
+      padding: 14px;
+      font-size: 0.93rem;
+      color: #2f2a21;
+    }
+
+    .cta {
+      display: grid;
+      gap: 12px;
+      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+      margin-top: 12px;
+    }
+
+    .cta .btn { text-align: center; text-decoration: none; }
+
+    .result-actions {
+      display: grid;
+      gap: 8px;
+      grid-template-columns: 1fr 1fr;
+      margin-top: 12px;
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(0.99); opacity: 0.7; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+
+    @media (max-width: 900px) {
+      .calc-layout { grid-template-columns: 1fr; }
+      .results { position: static; }
+    }
+
+    @media (max-width: 680px) {
+      .hero, .card, .section { padding: 16px; }
+      .form-grid { grid-template-columns: 1fr; }
+      .result-actions { grid-template-columns: 1fr; }
+      .button-row { display: grid; grid-template-columns: 1fr; }
+      .btn { width: 100%; }
+    }
+
+    @media print {
+      .button-row, .result-actions, .faq-q::after { display: none !important; }
+      body { background: #fff; }
+      .section, .card, .hero { box-shadow: none; }
     }
   </style>
 </head>
 <body>
-  <div class="wrap">
-    <div class="header">
-      <div class="badge"><span></span> Clean (ClearTax-style) tool</div>
+  <main class="taxcalc" id="uae-tax-calculator">
+    <section class="hero">
+      <div class="hero__kicker">Dubai Tax &amp; Property</div>
       <h1>UAE Corporate Tax Calculator</h1>
-      <p class="sub">Calculate corporate tax at <b>9%</b> on profits above <b>AED 375,000</b>.</p>
-    </div>
+      <p class="hero__sub">Estimate taxable income, 0% threshold usage, and 9% corporate tax liability in the UAE.</p>
+      <p class="hero__trust">For educational estimation only — not legal or tax advice.</p>
+    </section>
 
-    <div class="grid">
-      <!-- Left: Calculator -->
-      <div class="card">
-        <h2>Enter your numbers</h2>
+    <section class="calc-layout" aria-label="Calculator and live summary">
+      <article class="card">
+        <h2>Enter Your Business Inputs</h2>
+        <p class="card__intro">Use this calculator to estimate UAE corporate tax outcomes for companies and natural persons conducting taxable business activities.</p>
 
-        <div class="row">
-          <div>
-            <label for="profit">Annual Profit (AED)</label>
-            <div class="input">
-              <div class="prefix">AED</div>
-              <input id="profit" type="number" inputmode="decimal" placeholder="e.g., 800000" min="0" />
+        <div class="form-grid">
+          <div class="field">
+            <label for="revenue">Annual Revenue / Turnover (AED)</label>
+            <div class="input-wrap">
+              <span class="prefix">AED</span>
+              <input id="revenue" type="number" min="0" step="0.01" placeholder="e.g., 1,200,000" />
             </div>
-            <div class="hint">Tip: Enter profit after expenses (not turnover).</div>
+            <div class="field__error" id="revenueError">Revenue cannot be negative.</div>
           </div>
 
-          <div>
-            <label for="threshold">Tax-free threshold (AED)</label>
-            <div class="input">
-              <div class="prefix">AED</div>
-              <input id="threshold" type="number" inputmode="decimal" value="375000" min="0" />
+          <div class="field">
+            <label for="expenses">Allowable Business Expenses (AED)
+              <span class="help-tip" tabindex="0" data-tip="Allowable expenses generally include genuine business costs accepted for tax computation.">?</span>
+            </label>
+            <div class="input-wrap">
+              <span class="prefix">AED</span>
+              <input id="expenses" type="number" min="0" step="0.01" placeholder="e.g., 450,000" />
             </div>
-            <div class="hint">Default threshold: 375,000.</div>
           </div>
         </div>
 
-        <div class="row" style="margin-top:12px;">
-          <div>
-            <label for="rate">Tax rate</label>
-            <div class="input">
-              <div class="prefix">%</div>
-              <input id="rate" type="number" inputmode="decimal" value="9" min="0" step="0.01" />
+        <div class="toggle-row">
+          <strong>Advanced mode</strong>
+          <button id="advancedToggle" class="switch" role="switch" aria-checked="false" aria-label="Toggle advanced inputs"></button>
+        </div>
+
+        <div class="advanced-area" id="advancedArea">
+          <div class="form-grid">
+            <div class="field">
+              <label for="adjustments">Other Tax Adjustments (AED)
+                <span class="help-tip" tabindex="0" data-tip="Use positive values to increase taxable income and negative values to reduce it, if relevant.">?</span>
+              </label>
+              <div class="input-wrap">
+                <span class="prefix">AED</span>
+                <input id="adjustments" type="number" step="0.01" value="0" />
+              </div>
+              <small>Can be positive or negative.</small>
             </div>
-            <div class="hint">Standard corporate tax rate: 9%.</div>
-          </div>
 
-          <div>
-            <div class="pill">Output shows: <b>Taxable income</b> + <b>Tax payable</b></div>
+            <div class="field">
+              <label for="taxpayerType">Type of taxpayer
+                <span class="help-tip" tabindex="0" data-tip="Natural person means an individual conducting business activities in their own name.">?</span>
+              </label>
+              <div class="input-wrap">
+                <select id="taxpayerType">
+                  <option>Company / Juridical person</option>
+                  <option>Natural person / individual conducting business</option>
+                  <option>Freelancer / sole proprietor</option>
+                  <option>Consultant / professional</option>
+                  <option>Other</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="field">
+              <label for="freeZone">Is this a Free Zone business?
+                <span class="help-tip" tabindex="0" data-tip="Free zone outcomes may differ depending on legal and operational conditions.">?</span>
+              </label>
+              <div class="input-wrap">
+                <select id="freeZone">
+                  <option>No</option>
+                  <option>Yes</option>
+                  <option>Not sure</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="field">
+              <label for="qualifyingIncome">Income treated as qualifying for special treatment?</label>
+              <div class="input-wrap">
+                <select id="qualifyingIncome">
+                  <option>No</option>
+                  <option>Yes</option>
+                  <option>Not sure</option>
+                </select>
+              </div>
+            </div>
           </div>
         </div>
 
-        <div class="btns">
-          <button class="primary" onclick="calculate()">Calculate</button>
-          <button class="ghost" onclick="resetForm()">Reset</button>
+        <div class="button-row">
+          <button class="btn btn--gold" id="calculateBtn">Calculate Tax</button>
+          <button class="btn btn--line" id="exampleBtn">Example values</button>
+          <button class="btn btn--line" id="resetBtn">Reset</button>
         </div>
 
-        <div id="result" class="result" style="display:none;">
-          <div class="kv"><div class="k">Profit</div><div class="v" id="rProfit">—</div></div>
-          <div class="kv"><div class="k">Tax-free portion</div><div class="v" id="rFree">—</div></div>
-          <div class="kv"><div class="k">Taxable income</div><div class="v" id="rTaxable">—</div></div>
+        <div class="notes">
+          <div class="alert alert--info" id="freeZoneNote">Free Zone and qualifying income treatment can involve additional legal conditions. This calculator still provides a simplified estimate and does not confirm actual 0% eligibility.</div>
+          <div class="alert alert--note" id="uncertainNote">Your actual UAE Corporate Tax position may depend on business activity, licensing, source of income, free zone conditions, and regulatory guidance.</div>
+        </div>
+      </article>
 
-          <div class="big">
-            <div class="k">Corporate Tax Payable</div>
-            <div class="tax" id="rTax">—</div>
-            <div class="hint">Calculated as: taxable income × rate</div>
-          </div>
+      <aside class="card results" id="resultsCard" aria-live="polite">
+        <h2>Live Tax Summary</h2>
+        <span class="badge badge--neutral" id="statusBadge">Awaiting input</span>
 
-          <div class="warnBox" id="warn" style="display:none;">
-            Note: This is a simplified calculator. Certain businesses, reliefs, and specific rules may change the final liability.
-          </div>
+        <div class="metric"><span>Annual Revenue</span><strong id="rRevenue">AED 0</strong></div>
+        <div class="metric"><span>Allowable Expenses</span><strong id="rExpenses">AED 0</strong></div>
+        <div class="metric"><span>Net Taxable Income</span><strong id="rTaxableIncome">AED 0</strong></div>
+        <div class="metric"><span>0% Threshold Used</span><strong id="rZeroPortion">AED 0 (up to AED 375,000)</strong></div>
+        <div class="metric"><span>Income Taxed at 9%</span><strong id="rNinePortion">AED 0</strong></div>
+        <div class="metric"><span>Effective Tax Rate</span><strong id="rEffectiveRate">0.00%</strong></div>
+        <div class="metric"><span>Estimated Post-Tax Profit</span><strong id="rPostTax">AED 0</strong></div>
+
+        <div class="tax-highlight">
+          <div class="tax-highlight__label">Estimated UAE Corporate Tax</div>
+          <div class="tax-highlight__value" id="rTaxPayable">AED 0</div>
         </div>
 
-        <div class="footerNote">
-          Disclaimer: For education only. Always validate with current UAE laws/FTA guidance and your tax advisor.
+        <div class="bar" aria-label="Tax breakdown bar">
+          <div class="bar__zero" id="barZero" style="width:0%"></div>
+          <div class="bar__nine" id="barNine" style="width:0%"></div>
+          <div class="bar__post" id="barPost" style="width:0%"></div>
         </div>
-      </div>
 
-      <!-- Right: Explainer -->
-      <div class="card">
-        <h2>How this tool works</h2>
-        <p class="sideNote">
-          UAE Corporate Tax is generally applied at <b>9%</b> on profits above <b>AED 375,000</b>.
-          This tool shows a clean breakdown:
-        </p>
-        <ul class="sideNote">
-          <li><b>Profit:</b> what you enter</li>
-          <li><b>Tax-free portion:</b> up to the threshold</li>
-          <li><b>Taxable income:</b> profit − threshold (if positive)</li>
-          <li><b>Tax payable:</b> taxable income × tax rate</li>
+        <ul class="bar-legend">
+          <li class="l0">0% threshold portion</li>
+          <li class="l1">Taxed at 9%</li>
+          <li class="l2">Post-tax retained profit</li>
         </ul>
-        <p class="sideNote">
-          Next upgrades we can add: advanced options, free-zone logic, turnover toggle, and a “copy result” button.
-        </p>
+
+        <div class="result-actions">
+          <button class="btn btn--line" id="copyBtn">Copy result</button>
+          <button class="btn btn--line" id="printBtn">Print / Download summary</button>
+        </div>
+      </aside>
+    </section>
+
+    <section class="section">
+      <h2>How This UAE Corporate Tax Calculator Works</h2>
+      <p>This UAE corporate tax calculator uses a simplified educational formula. It starts with your annual revenue, deducts allowable business expenses, then applies any additional tax adjustments to estimate taxable income.</p>
+      <p>Under this model, the first AED 375,000 of taxable income is treated at 0%. Any taxable income above AED 375,000 is estimated at 9%. The tool then shows your estimated tax payable, effective tax rate, and post-tax profit.</p>
+      <p>Final UAE tax treatment can vary based on legal status, exemptions, transfer pricing, qualifying free zone income, natural person rules, and applicable guidance.</p>
+
+      <h3>Who Should Use This Tool</h3>
+      <p>This tool is useful for UAE companies, mainland businesses, free zone businesses, consultants, freelancers, sole proprietors, natural persons carrying on business activities, and Indian founders evaluating potential UAE tax exposure before formal structuring.</p>
+
+      <h3>Important Assumptions</h3>
+      <ul>
+        <li>This is a simplified estimate for planning purposes.</li>
+        <li>It does not replace official filings, legal advice, or tax advisory review.</li>
+        <li>It does not confirm exempt status or qualifying free zone treatment.</li>
+        <li>It does not include every possible law-based adjustment.</li>
+        <li>Inputs should be reviewed against actual books, records, and regulations.</li>
+      </ul>
+    </section>
+
+    <section class="section">
+      <h2>How to Use This Calculator</h2>
+      <ol>
+        <li>Enter your annual gross revenue in AED.</li>
+        <li>Enter your total allowable business expenses.</li>
+        <li>Add any other tax adjustments if relevant.</li>
+        <li>Select whether your business operates in a free zone or mainland setting.</li>
+        <li>Review the calculated taxable income.</li>
+        <li>Check how much falls within the 0% threshold.</li>
+        <li>See the portion estimated to be taxed at 9%.</li>
+        <li>Review your estimated tax payable and post-tax profit.</li>
+        <li>Read the notes carefully if you are unsure about free zone treatment, qualifying income, or natural person taxation.</li>
+        <li>Use the result as a planning estimate, not as a substitute for legal or tax advice.</li>
+      </ol>
+    </section>
+
+    <section class="section">
+      <h2>Frequently Asked Questions</h2>
+
+      <div class="faq-item open"><button class="faq-q">1. What is the UAE Corporate Tax rate?</button><div class="faq-a">In simplified general terms, taxable income up to AED 375,000 is typically treated at 0%, while taxable income above AED 375,000 is generally subject to 9% corporate tax.</div></div>
+      <div class="faq-item"><button class="faq-q">2. Does this calculator apply to free zone companies?</button><div class="faq-a">It provides a simplified estimate only. Free zone outcomes can depend on whether legal and factual conditions for special treatment are genuinely met.</div></div>
+      <div class="faq-item"><button class="faq-q">3. Can individuals or freelancers use this calculator?</button><div class="faq-a">Yes. Natural persons, sole proprietors, consultants, and freelancers conducting business activities may also need to evaluate corporate tax exposure based on facts and thresholds.</div></div>
+      <div class="faq-item"><button class="faq-q">4. Is revenue the same as taxable income?</button><div class="faq-a">No. Revenue is total business turnover. Taxable income is generally revenue minus allowable expenses, adjusted for relevant tax items.</div></div>
+      <div class="faq-item"><button class="faq-q">5. What if my business makes a loss?</button><div class="faq-a">If estimated taxable income is zero or negative, this tool will show a loss position and estimated corporate tax of AED 0.</div></div>
+      <div class="faq-item"><button class="faq-q">6. Does this tool give official tax advice?</button><div class="faq-a">No. This is an educational estimate and should not replace professional advice or official legal interpretation.</div></div>
+      <div class="faq-item"><button class="faq-q">7. Can this calculator confirm whether I qualify for 0% free zone treatment?</button><div class="faq-a">No. Qualification depends on legal and factual conditions that go beyond a simplified online calculator.</div></div>
+      <div class="faq-item"><button class="faq-q">8. What currency does this calculator use?</button><div class="faq-a">All values are calculated and displayed in AED.</div></div>
+      <div class="faq-item"><button class="faq-q">9. Should I include all expenses?</button><div class="faq-a">Only allowable business expenses should be included. Confirm classifications with reliable accounting records and tax guidance.</div></div>
+      <div class="faq-item"><button class="faq-q">10. Is this calculator useful for Indian entrepreneurs moving to Dubai?</button><div class="faq-a">Yes. It can support initial planning. However, cross-border tax, residency, structuring, and source-of-income issues should be reviewed separately.</div></div>
+    </section>
+
+    <section class="section">
+      <h2>Disclaimer</h2>
+      <div class="disclaimer">
+        This calculator is provided for general educational and informational use only. It does not constitute legal, tax, financial, or accounting advice. UAE Corporate Tax treatment depends on legislation, executive regulations, guidance, specific facts, accounting records, and professional interpretation. Free zone and natural person cases may require separate review. Obtain professional advice before relying on any estimate produced by this tool.
       </div>
-    </div>
-  </div>
+    </section>
+
+    <section class="section">
+      <h2>Explore Next Steps</h2>
+      <p>Use these resources to deepen your UAE corporate tax planning and compliance readiness.</p>
+      <div class="cta">
+        <a class="btn btn--gold" href="#" aria-label="Read UAE Corporate Tax Guide">Read UAE Corporate Tax Guide</a>
+        <a class="btn btn--line" href="#" aria-label="Learn about Free Zone Tax Rules">Learn About Free Zone Tax Rules</a>
+        <a class="btn btn--line" href="#" aria-label="Understand Corporate Tax for Natural Persons">Understand Corporate Tax for Natural Persons</a>
+        <a class="btn btn--gold" href="#" aria-label="Contact for Advisory Support">Contact for Advisory Support</a>
+      </div>
+    </section>
+  </main>
 
   <script>
-    function fmtAED(n){
-      const v = Number(n);
-      if (!isFinite(v)) return "—";
-      return "AED " + v.toLocaleString(undefined, {maximumFractionDigits: 2});
+    const state = {
+      threshold: 375000,
+      rate: 0.09
+    };
+
+    const els = {
+      revenue: document.getElementById('revenue'),
+      expenses: document.getElementById('expenses'),
+      adjustments: document.getElementById('adjustments'),
+      freeZone: document.getElementById('freeZone'),
+      qualifyingIncome: document.getElementById('qualifyingIncome'),
+      taxpayerType: document.getElementById('taxpayerType'),
+      revenueError: document.getElementById('revenueError'),
+      advancedArea: document.getElementById('advancedArea'),
+      advancedToggle: document.getElementById('advancedToggle'),
+      freeZoneNote: document.getElementById('freeZoneNote'),
+      uncertainNote: document.getElementById('uncertainNote'),
+      statusBadge: document.getElementById('statusBadge'),
+      rRevenue: document.getElementById('rRevenue'),
+      rExpenses: document.getElementById('rExpenses'),
+      rTaxableIncome: document.getElementById('rTaxableIncome'),
+      rZeroPortion: document.getElementById('rZeroPortion'),
+      rNinePortion: document.getElementById('rNinePortion'),
+      rEffectiveRate: document.getElementById('rEffectiveRate'),
+      rPostTax: document.getElementById('rPostTax'),
+      rTaxPayable: document.getElementById('rTaxPayable'),
+      barZero: document.getElementById('barZero'),
+      barNine: document.getElementById('barNine'),
+      barPost: document.getElementById('barPost')
+    };
+
+    function parseNumber(value) {
+      if (value === '' || value === null || value === undefined) return 0;
+      const n = Number(value);
+      return Number.isFinite(n) ? n : 0;
     }
 
-    function calculate(){
-      const profit = Number(document.getElementById("profit").value);
-      const threshold = Number(document.getElementById("threshold").value);
-      const rate = Number(document.getElementById("rate").value) / 100;
-
-      if (!isFinite(profit) || profit < 0){
-        alert("Please enter a valid profit (0 or more).");
-        return;
-      }
-      if (!isFinite(threshold) || threshold < 0){
-        alert("Please enter a valid threshold (0 or more).");
-        return;
-      }
-      if (!isFinite(rate) || rate < 0){
-        alert("Please enter a valid tax rate (0 or more).");
-        return;
-      }
-
-      const freePortion = Math.min(profit, threshold);
-      const taxable = Math.max(0, profit - threshold);
-      const tax = taxable * rate;
-
-      document.getElementById("rProfit").textContent = fmtAED(profit);
-      document.getElementById("rFree").textContent = fmtAED(freePortion);
-      document.getElementById("rTaxable").textContent = fmtAED(taxable);
-      document.getElementById("rTax").textContent = fmtAED(tax);
-
-      document.getElementById("result").style.display = "block";
-      document.getElementById("warn").style.display = "block";
+    function formatAED(value) {
+      return `AED ${Number(value).toLocaleString('en-US', { maximumFractionDigits: 2 })}`;
     }
 
-    function resetForm(){
-      document.getElementById("profit").value = "";
-      document.getElementById("threshold").value = 375000;
-      document.getElementById("rate").value = 9;
-      document.getElementById("result").style.display = "none";
+    function calculate() {
+      const revenue = parseNumber(els.revenue.value);
+      const expenses = parseNumber(els.expenses.value);
+      const adjustments = parseNumber(els.adjustments.value);
+
+      if (revenue < 0) {
+        els.revenueError.style.display = 'block';
+        return;
+      }
+      els.revenueError.style.display = 'none';
+
+      const taxableIncome = revenue - Math.max(0, expenses) + adjustments;
+      const zeroPortion = Math.max(0, Math.min(taxableIncome, state.threshold));
+      const ninePortion = Math.max(0, taxableIncome - state.threshold);
+      const taxPayable = ninePortion * state.rate;
+      const effectiveRate = taxableIncome > 0 ? (taxPayable / taxableIncome) * 100 : 0;
+      const postTax = taxableIncome - taxPayable;
+
+      els.rRevenue.textContent = formatAED(revenue);
+      els.rExpenses.textContent = formatAED(expenses);
+      els.rTaxableIncome.textContent = formatAED(taxableIncome);
+      els.rZeroPortion.textContent = `${formatAED(zeroPortion)} (up to AED 375,000)`;
+      els.rNinePortion.textContent = formatAED(ninePortion);
+      els.rEffectiveRate.textContent = `${effectiveRate.toFixed(2)}%`;
+      els.rPostTax.textContent = formatAED(postTax);
+      els.rTaxPayable.textContent = formatAED(Math.max(0, taxPayable));
+
+      updateStatus(taxableIncome, ninePortion);
+      updateAlerts();
+      updateBar(zeroPortion, ninePortion, Math.max(0, postTax), Math.max(0, taxableIncome));
     }
+
+    function updateStatus(taxableIncome, ninePortion) {
+      let text = 'No Corporate Tax Likely';
+      let cls = 'badge badge--good';
+
+      if (taxableIncome <= 0) {
+        text = 'Loss Position / No Tax Due';
+        cls = 'badge badge--neutral';
+      } else if (els.freeZone.value === 'Yes' || els.qualifyingIncome.value === 'Yes') {
+        text = 'Review Free Zone Treatment';
+        cls = 'badge badge--warn';
+      } else if (taxableIncome > state.threshold && ninePortion > 0) {
+        text = 'Taxable Above Threshold';
+        cls = 'badge badge--warn';
+      } else if (taxableIncome > 0 && taxableIncome <= state.threshold) {
+        text = 'No Corporate Tax Likely';
+        cls = 'badge badge--good';
+      } else {
+        text = 'Partial 9% Tax Exposure';
+        cls = 'badge badge--warn';
+      }
+
+      els.statusBadge.textContent = text;
+      els.statusBadge.className = cls;
+    }
+
+    function updateAlerts() {
+      const showFz = els.freeZone.value === 'Yes' || els.qualifyingIncome.value === 'Yes';
+      const showUnsure = els.freeZone.value === 'Not sure' || els.qualifyingIncome.value === 'Not sure';
+      els.freeZoneNote.style.display = showFz ? 'block' : 'none';
+      els.uncertainNote.style.display = showUnsure ? 'block' : 'none';
+    }
+
+    function updateBar(zeroPortion, ninePortion, postTax, taxableIncome) {
+      if (taxableIncome <= 0) {
+        els.barZero.style.width = '0%';
+        els.barNine.style.width = '0%';
+        els.barPost.style.width = '0%';
+        return;
+      }
+
+      const totalView = zeroPortion + ninePortion + postTax;
+      const safe = totalView > 0 ? totalView : 1;
+      const pZero = (zeroPortion / safe) * 100;
+      const pNine = (ninePortion / safe) * 100;
+      const pPost = (postTax / safe) * 100;
+
+      els.barZero.style.width = `${pZero.toFixed(2)}%`;
+      els.barNine.style.width = `${pNine.toFixed(2)}%`;
+      els.barPost.style.width = `${pPost.toFixed(2)}%`;
+    }
+
+    function setExampleValues() {
+      els.revenue.value = 1250000;
+      els.expenses.value = 575000;
+      els.adjustments.value = 25000;
+      els.freeZone.value = 'No';
+      els.qualifyingIncome.value = 'No';
+      els.taxpayerType.value = 'Company / Juridical person';
+      calculate();
+    }
+
+    function resetValues() {
+      els.revenue.value = '';
+      els.expenses.value = '';
+      els.adjustments.value = 0;
+      els.freeZone.value = 'No';
+      els.qualifyingIncome.value = 'No';
+      els.taxpayerType.value = 'Company / Juridical person';
+      calculate();
+    }
+
+    function copyResult() {
+      const text = [
+        'UAE Corporate Tax Estimate Summary',
+        `Taxpayer Type: ${els.taxpayerType.value}`,
+        `Revenue: ${els.rRevenue.textContent}`,
+        `Allowable Expenses: ${els.rExpenses.textContent}`,
+        `Net Taxable Income: ${els.rTaxableIncome.textContent}`,
+        `Income Taxed at 9%: ${els.rNinePortion.textContent}`,
+        `Estimated Tax Payable: ${els.rTaxPayable.textContent}`,
+        `Effective Tax Rate: ${els.rEffectiveRate.textContent}`,
+        `Post-Tax Profit: ${els.rPostTax.textContent}`,
+        `Status: ${els.statusBadge.textContent}`,
+        'Educational estimate only — not legal or tax advice.'
+      ].join('\n');
+
+      navigator.clipboard.writeText(text).then(() => {
+        alert('Summary copied to clipboard.');
+      }).catch(() => {
+        alert('Unable to copy automatically. Please copy manually.');
+      });
+    }
+
+    function toggleAdvanced() {
+      const isOn = els.advancedToggle.getAttribute('aria-checked') === 'true';
+      const next = !isOn;
+      els.advancedToggle.setAttribute('aria-checked', String(next));
+      els.advancedArea.classList.toggle('is-on', next);
+      calculate();
+    }
+
+    document.getElementById('calculateBtn').addEventListener('click', calculate);
+    document.getElementById('exampleBtn').addEventListener('click', setExampleValues);
+    document.getElementById('resetBtn').addEventListener('click', resetValues);
+    document.getElementById('copyBtn').addEventListener('click', copyResult);
+    document.getElementById('printBtn').addEventListener('click', () => window.print());
+    document.getElementById('advancedToggle').addEventListener('click', toggleAdvanced);
+
+    [els.revenue, els.expenses, els.adjustments, els.freeZone, els.qualifyingIncome, els.taxpayerType].forEach((el) => {
+      el.addEventListener('input', calculate);
+      el.addEventListener('change', calculate);
+    });
+
+    document.querySelectorAll('.faq-q').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const item = btn.parentElement;
+        item.classList.toggle('open');
+      });
+    });
+
+    calculate();
   </script>
 </body>
 </html>
